@@ -7,14 +7,9 @@ phases:
 
   post_build:
     commands:
-      - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-      - apt install unzip
-      - unzip awscliv2.zip
-      - ./aws/install
-      - apt install gnupg2 pass
-      - aws ecr get-login-password --region ap-south-1 | sudo docker login --username AWS --password-stdin 887733174116.dkr.ecr.ap-south-1.amazonaws.com
+      - eval `aws ecr get-login-password --region ap-south-1`
       - docker tag flaskapp_flaskapp:latest 887733174116.dkr.ecr.ap-south-1.amazonaws.com/application:latest
       - docker push 887733174116.dkr.ecr.ap-south-1.amazonaws.com/application:latest
-      - aws ecr get-login-password --region ap-south-1 | sudo docker login --username AWS --password-stdin 887733174116.dkr.ecr.ap-south-1.amazonaws.com
+      - eval `aws ecr get-login-password --region ap-south-1`
       - docker tag flaskapp_nginx:latest 887733174116.dkr.ecr.ap-south-1.amazonaws.com/webserver:latest
       - docker push 887733174116.dkr.ecr.ap-south-1.amazonaws.com/webserver:latest
